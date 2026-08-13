@@ -1,0 +1,431 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Doordarshan Shaam — Kishore &amp; Lata, evening reruns</title>
+<meta property="og:title" content="Doordarshan Shaam">
+<meta property="og:description" content="An 80s living room, a humming TV, and the songs that played every evening.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#1b140f; --walnut:#3e2a1d; --brass:#c99a4b; --rust:#9c4a35; --teal:#4f8a80; --parchment:#ecdfc4; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:var(--ink);overflow:hidden;font-family:'Mukta',sans-serif;}
+  body{display:flex;align-items:center;justify-content:center;}
+  .room{position:relative;width:100vw;height:100vh;height:100dvh;max-width:1000px;max-height:750px;background:radial-gradient(ellipse 90% 60% at 50% 0%, #2a2015 0%, #16110c 70%),linear-gradient(180deg, #241a12 0%, #16110c 55%, #100c08 100%);border-radius:6px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,0.65);}
+  .wall{position:absolute;inset:0 0 34% 0;background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 90px),linear-gradient(180deg, #2f2216 0%, #241a12 100%);}
+  .lightbeam{position:absolute;top:16%;right:14%;width:60%;height:70%;background:linear-gradient(160deg, rgba(233,178,95,0.22), rgba(233,178,95,0) 70%);filter:blur(2px);pointer-events:none;mix-blend-mode:screen;}
+  .frame{position:absolute;margin:0;padding:7px;border-radius:3px;background:linear-gradient(158deg,#6a4830 0%,#3e2a1d 55%,#2a1b12 100%);box-shadow:-8px 13px 22px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(201,154,75,0.28);}
+  .frame::before{content:"";position:absolute;top:-7px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--brass);box-shadow:0 0 5px rgba(201,154,75,0.7);}
+  .frame::after{content:"";position:absolute;inset:0;border-radius:3px;pointer-events:none;background:linear-gradient(146deg, rgba(255,232,190,0.16) 0%, rgba(255,232,190,0.03) 38%, rgba(255,232,190,0) 60%);}
+  .frame img{display:block;width:100%;filter:sepia(0.26) saturate(0.88) contrast(0.95) brightness(0.94);}
+  .bigframe{top:6%;right:6%;width:22%;padding:10px;box-shadow:-10px 16px 30px rgba(0,0,0,0.6), inset 0 0 0 2px rgba(201,154,75,0.32);}
+  .bigframe .stack{position:relative;width:100%;aspect-ratio:4/5;border:1px solid rgba(0,0,0,0.55);background:linear-gradient(180deg,#241a12,#181109);}
+  .bigframe .stack img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.1s ease;}
+  .bigframe .stack img.show{opacity:1;}
+  .dust{position:absolute;border-radius:50%;background:rgba(255,230,180,0.55);pointer-events:none;opacity:0;filter:blur(0.3px);animation:floaty 9s linear infinite;}
+  @keyframes floaty{0%{opacity:0;transform:translate(0,0);}10%{opacity:.7;}90%{opacity:.4;}100%{opacity:0;transform:translate(-40px,-160px);}}
+  .calendar{position:absolute;top:9%;left:8%;width:9%;aspect-ratio:3/4;background:linear-gradient(180deg,#e9dcbf,#d8c79c);border:3px solid var(--walnut);box-shadow:0 8px 18px rgba(0,0,0,0.45);}
+  .calendar::before{content:"";position:absolute;top:8%;left:8%;right:8%;height:46%;background:radial-gradient(ellipse at 50% 30%, #d98a5a 0%, #b5573c 55%, #7a3324 100%);border-radius:2px;}
+  .calendar::after{content:"";position:absolute;bottom:10%;left:14%;right:14%;height:2px;background:repeating-linear-gradient(90deg,#8a7856 0 3px, transparent 3px 7px);box-shadow:0 8px 0 0 rgba(138,120,86,0.7), 0 16px 0 0 rgba(138,120,86,0.5);}
+  .floor{position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg, #241a12 0%, #1a130d 100%);border-top:2px solid rgba(201,154,75,0.15);}
+  .rug{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);width:70%;height:38%;background:repeating-linear-gradient(90deg, #7a2e22 0 14px, #9c4a35 14px 28px);border-radius:6px;box-shadow:0 0 0 6px #5c2318, 0 18px 30px rgba(0,0,0,0.5);opacity:0.9;}
+  .tv-wrap{position:absolute;bottom:24%;left:8%;width:38%;display:flex;flex-direction:column;align-items:center;}
+  .antenna{position:absolute;top:-13%;width:100%;height:15%;pointer-events:none;}
+  .antenna i{position:absolute;bottom:0;width:2px;height:100%;background:var(--brass);transform-origin:bottom center;box-shadow:0 0 6px rgba(201,154,75,0.5);}
+  .antenna i:first-child{left:44%;transform:rotate(-24deg);}
+  .antenna i:last-child{left:54%;transform:rotate(24deg);}
+  .tv{position:relative;width:100%;aspect-ratio:5/4;background:linear-gradient(160deg,#5a3d28,#2f2013 70%);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,0.55), inset 0 0 0 3px #1b140f;padding:6% 6% 12%;}
+  .screen{position:relative;width:100%;height:74%;border-radius:8px;background:radial-gradient(ellipse at 50% 45%, #0c1614 0%, #060b0a 75%);overflow:hidden;box-shadow:inset 0 0 30px rgba(0,0,0,0.9), inset 0 0 0 3px #100a06;}
+  .screen .scanlines{position:absolute;inset:0;background:repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 3px);mix-blend-mode:overlay;pointer-events:none;z-index:3;}
+  .screen .glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%, rgba(79,138,128,0.0) 0%, rgba(79,138,128,0) 70%);transition:background 0.6s ease;}
+  .room.on .screen .glow{background:radial-gradient(ellipse at 50% 45%, rgba(79,138,128,0.55) 0%, rgba(79,138,128,0.05) 72%);}
+  .screen .caption{position:absolute;left:0;right:0;bottom:10%;text-align:center;opacity:0;transform:translateY(6px);transition:opacity .5s ease, transform .5s ease;pointer-events:none;z-index:4;}
+  #ytHost{position:absolute;inset:0;z-index:1;}
+  #ytHost iframe{width:100%;height:100%;border:0;}
+  .room.on .screen .caption{opacity:1;transform:translateY(0);}
+  .caption .title{font-family:'Rozha One', serif;color:var(--parchment);font-size:clamp(10px, 1.9vw, 17px);letter-spacing:0.5px;text-shadow:0 0 10px rgba(236,223,196,0.5);}
+  .caption .meta{color:#a9d6cc;font-size:clamp(7px, 1vw, 10px);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px;opacity:0.85;}
+  .static{position:absolute;inset:0;background:repeating-conic-gradient(#111 0turn, #444 0.001turn, #eee 0.002turn, #111 0.003turn);background-size:3px 3px;opacity:0;pointer-events:none;z-index:3;}
+  .flicker .static{animation:flick 0.35s steps(2) 2;}
+  @keyframes flick{0%{opacity:0;}30%{opacity:0.9;}60%{opacity:0.3;}100%{opacity:0;}}
+  .tv-base{position:absolute;bottom:0;left:10%;right:10%;height:16%;display:flex;align-items:center;justify-content:space-between;padding:0 8%;}
+  .dial{width:16%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%, #e0b361, var(--brass) 55%, #8a6428 100%);box-shadow:0 3px 6px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(27,20,15,0.4);cursor:pointer;position:relative;transition:transform .25s ease;}
+  .dial::after{content:"";position:absolute;top:14%;left:50%;width:2px;height:30%;background:#3a2a12;transform:translateX(-50%);}
+  .dial:hover{filter:brightness(1.1);}
+  .dial:active{transform:scale(0.94);}
+  .speaker-grill{width:46%;height:40%;background-image:repeating-linear-gradient(90deg, #17110a 0 2px, transparent 2px 6px);opacity:0.8;}
+  .console{position:absolute;bottom:22%;right:9%;width:22%;background:linear-gradient(160deg,#4a3220,#2a1c11);border-radius:8px;padding:8% 8% 10%;box-shadow:0 16px 30px rgba(0,0,0,0.5), inset 0 0 0 2px #1b140f;}
+  .console .strip{height:14px;border-radius:3px;background:linear-gradient(90deg,#1a1310,#241a13);box-shadow:inset 0 0 4px rgba(0,0,0,0.8);position:relative;margin-bottom:10%;overflow:hidden;}
+  .console .strip .needle{position:absolute;top:0;bottom:0;width:2px;background:var(--teal);box-shadow:0 0 6px var(--teal);left:12%;transition:left .6s cubic-bezier(.6,.1,.2,1);}
+  .console .knobs{display:flex;justify-content:space-between;}
+  .console .knob{width:26%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%, #7a9a92, var(--teal) 55%, #2e534c 100%);box-shadow:0 3px 6px rgba(0,0,0,0.5);}
+  .vcr{position:absolute;left:50%;bottom:11%;transform:translateX(-50%);width:40%;aspect-ratio:5/1;display:flex;align-items:center;gap:3.5%;padding:0 3.5%;border-radius:5px;background:linear-gradient(180deg,#50453a 0%,#2c241d 40%,#1c1611 100%);box-shadow:0 16px 30px rgba(0,0,0,0.62), inset 0 1px 0 rgba(201,154,75,0.25);}
+  .vcr::after{content:"";position:absolute;left:5%;right:5%;bottom:-5px;height:5px;border-radius:0 0 4px 4px;background:#120d09;}
+  .slot{position:relative;width:33%;height:46%;border-radius:2px;overflow:hidden;background:linear-gradient(180deg,#0c0906,#191310);box-shadow:inset 0 2px 6px rgba(0,0,0,0.95), 0 1px 0 rgba(201,154,75,0.16);}
+  .tape{position:absolute;left:5%;right:5%;top:2%;height:96%;border-radius:1px;transform:translateY(-118%);background:linear-gradient(180deg,#3d332a,#241d16);box-shadow:0 2px 6px rgba(0,0,0,0.7);}
+  .tape::before{content:"";position:absolute;inset:20% 14%;border-radius:1px;background:linear-gradient(180deg,#c9b98f,#8a7856);opacity:0.5;}
+  .vcr.loading .tape{animation:load-tape 1.5s cubic-bezier(.35,.85,.35,1) 1;}
+  @keyframes load-tape{0%{transform:translateY(-118%);}38%{transform:translateY(0);}58%{transform:translateY(-7%);}100%{transform:translateY(118%);}}
+  .vcr-display{flex:1;height:54%;display:flex;align-items:center;justify-content:space-between;padding:0 5%;border-radius:2px;background:linear-gradient(180deg,#07100f,#040a09);box-shadow:inset 0 0 8px rgba(0,0,0,0.9), inset 0 0 0 1px rgba(79,138,128,0.22);color:#6fd8c4;font-size:clamp(6px,1.02vw,11px);letter-spacing:1.5px;text-shadow:0 0 6px rgba(79,138,128,0.75);}
+  .vcr-btns{display:flex;gap:4px;}
+  .vcr-btns i{width:9px;height:5px;border-radius:1px;background:linear-gradient(180deg,#6c5e4d,#3a3128);box-shadow:0 1px 0 rgba(0,0,0,0.55);}
+  .vcr-led{width:5px;height:5px;border-radius:50%;background:#7a3324;box-shadow:0 0 4px rgba(122,51,36,0.7);transition:background .3s ease, box-shadow .3s ease;}
+  .room.on .vcr-led{background:#e0552f;box-shadow:0 0 9px rgba(224,85,47,0.95);}
+  .bar{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg, rgba(16,12,8,0.96), rgba(16,12,8,0.75));padding:14px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(201,154,75,0.25);backdrop-filter:blur(2px);}
+  .track-info{flex:1;min-width:0;color:var(--parchment);}
+  .track-info .t{font-family:'Rozha One', serif;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .track-info .s{font-size:11px;color:#c9b98f;opacity:0.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .btn{background:none;border:1px solid rgba(201,154,75,0.4);color:var(--brass);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s ease;}
+  .btn:hover{background:rgba(201,154,75,0.15);}
+  .credit{position:absolute;top:10px;left:14px;z-index:5;color:rgba(236,223,196,0.55);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;}
+  .credit b{color:var(--brass);font-weight:600;}
+  .warn{display:none;position:absolute;left:50%;top:10%;transform:translateX(-50%);z-index:20;max-width:86%;background:rgba(16,12,8,0.94);color:var(--parchment);border:1px solid rgba(201,154,75,0.45);border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.45;text-align:center;}
+  .warn.show{display:block;}
+  .warn a{color:var(--brass);}
+  .power{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5%;border:0;padding:0;cursor:pointer;font-family:'Mukta',sans-serif;background:radial-gradient(ellipse at 50% 45%, #0d1715 0%, #060b0a 78%);-webkit-tap-highlight-color:transparent;}
+  .power[hidden]{display:none;}
+  .power .ring{width:clamp(34px,20%,62px);aspect-ratio:1;border-radius:50%;border:2px solid rgba(201,154,75,0.75);background:rgba(16,12,8,0.55);color:var(--brass);display:flex;align-items:center;justify-content:center;padding-left:8%;font-size:clamp(13px,3.4vw,20px);box-shadow:0 0 20px rgba(201,154,75,0.3);}
+  .power .lbl{color:var(--parchment);font-size:clamp(8px,2.2vw,11px);letter-spacing:1.4px;text-transform:uppercase;opacity:0.75;}
+  .power:active .ring{transform:scale(0.94);}
+  @media (max-width:640px){
+    /* Phones get the full screen rather than the capped 1000x750 room, and the
+       TV is centred so the room composes itself on anything from a 667px-tall
+       SE to a 932px-tall Pro Max. Insets keep the notch and the home indicator
+       clear of the header and the playback controls. */
+    .room{max-height:none;border-radius:0;box-shadow:none;}
+    .track-info .s{display:none;}
+    .console{display:none;}
+    .credit{font-size:9px;letter-spacing:1.2px;white-space:nowrap;text-shadow:0 1px 4px rgba(16,12,8,0.95);top:calc(10px + env(safe-area-inset-top));left:calc(14px + env(safe-area-inset-left));}
+    .credit .tail{display:none;}
+    .bar{padding-bottom:calc(14px + env(safe-area-inset-bottom));}
+    .tv-wrap{left:50%;top:50%;bottom:auto;transform:translate(-50%,-50%);width:min(88%, 62dvh);}
+    .bigframe{width:min(34%, 23dvh);top:calc(7% + env(safe-area-inset-top));right:5%;padding:6px;}
+    .calendar{width:14%;top:12%;left:5%;}
+    .rug{bottom:30%;width:80%;height:52%;}
+    .vcr{width:82%;bottom:13%;aspect-ratio:4.4/1;gap:4%;padding:0 4%;}
+    .vcr-display{font-size:8px;letter-spacing:0.8px;padding:0 6%;}
+    .vcr-btns i{width:6px;height:4px;}
+  }
+  @media (max-width:900px) and (max-height:500px) and (orientation:landscape){
+    /* Phone held sideways: the room is very short, so drop the wall clutter and
+       let the TV take the height it needs. */
+    .calendar,.rug{display:none;}
+    .room{max-height:none;border-radius:0;}
+    .tv-wrap{left:6%;bottom:auto;top:50%;transform:translateY(-50%);width:min(46%, 80dvh);}
+    .bigframe{width:min(26%, 40dvh);top:12%;right:6%;padding:7px;}
+    .console{display:none;}
+    .vcr{width:34%;left:auto;right:6%;transform:none;bottom:20%;}
+    .bar{padding:10px 18px calc(10px + env(safe-area-inset-bottom));}
+  }
+</style>
+</head>
+<body>
+
+<div class="room" id="room">
+  <div class="credit">Doordarshan Shaam · <b>Kishore &amp; Lata</b><span class="tail">, every evening</span></div>
+
+  <div class="warn" id="fileWarn">
+    This page must be served over <b>http/https</b>. Open it from your GitHub Pages URL, not from a local file.
+  </div>
+
+  <div class="wall">
+    <div class="calendar"></div>
+    <figure class="frame bigframe" id="bigFrame" role="img" aria-label="Slideshow of family photos"></figure>
+    <div class="lightbeam"></div>
+  </div>
+
+  <div class="floor"><div class="rug"></div></div>
+
+  <div class="tv-wrap">
+    <div class="antenna"><i></i><i></i></div>
+    <div class="tv">
+      <div class="screen" id="screen">
+        <div class="glow"></div>
+        <div class="scanlines"></div>
+        <div class="static"></div>
+        <div id="ytHost"></div>
+        <button class="power" id="power" aria-label="Play">
+          <span class="ring">&#9654;</span>
+          <span class="lbl">Tap to play</span>
+        </button>
+        <div class="caption">
+          <div class="title" id="capTitle">—</div>
+          <div class="meta" id="capMeta">—</div>
+        </div>
+      </div>
+      <div class="tv-base">
+        <div class="speaker-grill"></div>
+        <div class="dial" id="dial" title="turn the dial"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="console">
+    <div class="strip"><div class="needle" id="needle"></div></div>
+    <div class="knobs"><div class="knob"></div><div class="knob"></div></div>
+  </div>
+
+  <div class="vcr" id="vcr">
+    <div class="slot"><div class="tape"></div></div>
+    <div class="vcr-display">
+      <span id="vcrMode">STOP</span>
+      <span id="vcrCount">0:00</span>
+    </div>
+    <div class="vcr-btns"><i></i><i></i><i></i></div>
+    <div class="vcr-led"></div>
+  </div>
+
+  <div class="bar">
+    <button class="btn" id="prevBtn" aria-label="previous">⟲</button>
+    <div class="track-info">
+      <div class="t" id="barTitle">Tap the TV to play</div>
+      <div class="s" id="barMeta">Use the dial or the arrows to change songs</div>
+    </div>
+    <button class="btn" id="nextBtn" aria-label="next">⟳</button>
+  </div>
+</div>
+
+<script>
+  let player = null;
+  let isOn = false;
+  let playing = false;
+  let index = 0;
+  let skipTries = 0;
+  let tapeFor = null;
+
+  // The big frame cycles through these, five seconds each. To add more, drop the
+  // originals in images/ , run optimize-photos.ps1, then list the new files here.
+  const PHOTOS = [
+    "images/photo01.jpg", "images/photo02.jpg", "images/photo03.jpg",
+    "images/photo04.jpg", "images/photo05.jpg", "images/photo06.jpg",
+    "images/photo07.jpg", "images/photo08.jpg", "images/photo09.jpg",
+    "images/photo10.jpg", "images/photo11.jpg", "images/photo12.jpg",
+    "images/photo13.jpg", "images/photo14.jpg", "images/photo15.jpg",
+    "images/photo16.jpg", "images/photo17.jpg", "images/photo18.jpg",
+    "images/photo19.jpg", "images/photo20.jpg", "images/photo21.jpg",
+    "images/photo22.jpg", "images/photo23.jpg"
+  ];
+
+  const TRACKS = [
+    { id: "EiUDYzqdz2U", title: "Tere Bina Zindagi Se", artist: "Kishore Kumar & Lata Mangeshkar" },
+    { id: "dmm5lM9BR8o", title: "Aap Ki Ankhon Mein Kuch", artist: "Kishore Kumar & Lata Mangeshkar" },
+    { id: "6C7R_CUJgHQ", title: "Rimjhim Gire Sawan", artist: "Lata Mangeshkar" },
+    { id: "b6WLXTkei_k", title: "Ek Ajnabee Haseena Se", artist: "Kishore Kumar" },
+    { id: "AMuRRXCuy-4", title: "Pal Pal Dil Ke Paas", artist: "Kishore Kumar" },
+    { id: "YwcRJbaQkFU", title: "O Mere Dil Ke Chain", artist: "Kishore Kumar" },
+    { id: "ij5ox38TyzU", title: "Hum Bewafa Hargiz Na Thay", artist: "Kishore Kumar" },
+    { id: "tHK7f4VpJ48", title: "Tujhse Naraz Nahin Zindagi", artist: "Lata Mangeshkar" }
+  ];
+
+  const room = document.getElementById("room");
+  const capTitle = document.getElementById("capTitle");
+  const capMeta = document.getElementById("capMeta");
+  const barTitle = document.getElementById("barTitle");
+  const barMeta = document.getElementById("barMeta");
+  const needle = document.getElementById("needle");
+  const fileWarn = document.getElementById("fileWarn");
+  const powerBtn = document.getElementById("power");
+  const vcr = document.getElementById("vcr");
+  const vcrMode = document.getElementById("vcrMode");
+  const vcrCount = document.getElementById("vcrCount");
+
+  const served = location.protocol === "http:" || location.protocol === "https:";
+  if (!served) {
+    fileWarn.classList.add("show");
+    barTitle.textContent = "Serve this page over http/https";
+    barMeta.textContent = "YouTube blocks embeds opened directly from disk";
+    powerBtn.hidden = true;
+  }
+
+  let dialPos = 0;
+  function bumpNeedle(){
+    dialPos = (dialPos + 1) % 6;
+    needle.style.left = (8 + (dialPos / 5) * 84) + "%";
+  }
+
+  function flicker(){
+    room.classList.add("flicker");
+    setTimeout(() => room.classList.remove("flicker"), 700);
+  }
+
+  function setCaption(title, meta){
+    capTitle.textContent = title;
+    capMeta.textContent = meta;
+    barTitle.textContent = title;
+    barMeta.textContent = meta;
+  }
+
+  function audible(){
+    if (!player) return;
+    try { player.unMute(); player.setVolume(100); } catch (e) {}
+  }
+
+  // Guarded by video id so a song only gets one tape, whether the change came
+  // from our own controls or from the player's built-in ones.
+  function feedTape(id){
+    if (id && tapeFor === id) return;
+    if (id) tapeFor = id;
+    vcr.classList.remove("loading");
+    void vcr.offsetWidth;
+    vcr.classList.add("loading");
+    vcrMode.textContent = "LOAD";
+    vcrCount.textContent = "0:00";
+  }
+
+  function clock(seconds){
+    const s = Math.max(0, Math.floor(seconds));
+    return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+  }
+
+  function loadTrack(i, autoplay){
+    index = ((i % TRACKS.length) + TRACKS.length) % TRACKS.length;
+    const t = TRACKS[index];
+    setCaption(t.title, t.artist);
+    bumpNeedle();
+    flicker();
+    if (!player) return;
+    feedTape(t.id);
+    if (autoplay) { audible(); player.loadVideoById(t.id); }
+    else player.cueVideoById(t.id);
+  }
+
+  function nextTrack(autoplay){ loadTrack(index + 1, autoplay); }
+  function prevTrack(autoplay){ loadTrack(index - 1, autoplay); }
+
+  window.onYouTubeIframeAPIReady = function(){
+    if (!served) return;
+
+    // The iframe is built by hand so it carries allow="autoplay"; without that
+    // permission the cross-origin embed refuses playVideo() calls from this page.
+    const params = new URLSearchParams({
+      enablejsapi: "1",
+      controls: "1",
+      modestbranding: "1",
+      playsinline: "1",
+      rel: "0",
+      origin: location.origin
+    });
+    const frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + TRACKS[0].id + "?" + params.toString();
+    frame.title = "Doordarshan screen";
+    frame.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+    frame.setAttribute("allowfullscreen", "");
+    frame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+    document.getElementById("ytHost").appendChild(frame);
+
+    player = new YT.Player(frame, {
+      events: {
+        onReady: () => {
+          setCaption(TRACKS[0].title, TRACKS[0].artist);
+        },
+        onStateChange: (e) => {
+          playing = e.data === YT.PlayerState.PLAYING;
+          if (playing) {
+            isOn = true;
+            skipTries = 0;
+            powerBtn.hidden = true;
+            room.classList.add("on");
+            const data = player.getVideoData && player.getVideoData();
+            if (data && data.video_id) feedTape(data.video_id);
+            if (data && data.title) setCaption(data.title, data.author || TRACKS[index].artist);
+          }
+          if (e.data === YT.PlayerState.ENDED) nextTrack(true);
+        },
+        onError: () => {
+          skipTries++;
+          if (skipTries >= TRACKS.length) {
+            setCaption("No playable embeds found", "Try different video IDs");
+            return;
+          }
+          setCaption("Skipping blocked video…", TRACKS[index].artist);
+          setTimeout(() => nextTrack(true), 500);
+        }
+      }
+    });
+  };
+
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
+
+  powerBtn.addEventListener("click", () => {
+    if (!player) return;
+    audible();
+    player.playVideo();
+    // If the browser refused the programmatic start, step aside so the player's
+    // own play button underneath becomes tappable.
+    setTimeout(() => {
+      const st = player.getPlayerState();
+      if (st !== YT.PlayerState.PLAYING && st !== YT.PlayerState.BUFFERING) {
+        powerBtn.hidden = true;
+        barMeta.textContent = "Tap the play button on the screen";
+      }
+    }, 1000);
+  });
+
+  document.getElementById("dial").addEventListener("click", () => nextTrack(true));
+  document.getElementById("nextBtn").addEventListener("click", () => nextTrack(true));
+  document.getElementById("prevBtn").addEventListener("click", () => prevTrack(true));
+
+  const bigFrame = document.getElementById("bigFrame");
+  if (!PHOTOS.length) {
+    bigFrame.remove();
+  } else {
+    const stack = document.createElement("div");
+    stack.className = "stack";
+    // Two layers cross-fade into each other, so however long the slideshow grows
+    // only the current and next photo are ever fetched.
+    const layers = [new Image(), new Image()];
+    layers.forEach(img => { img.alt = ""; stack.appendChild(img); });
+    bigFrame.appendChild(stack);
+
+    let front = 0;
+    let shown = 0;
+    layers[0].src = PHOTOS[0];
+    layers[0].classList.add("show");
+
+    if (PHOTOS.length > 1) {
+      setInterval(() => {
+        const next = (shown + 1) % PHOTOS.length;
+        const back = layers[1 - front];
+        back.onload = () => {
+          back.classList.add("show");
+          layers[front].classList.remove("show");
+          front = 1 - front;
+          shown = next;
+        };
+        back.onerror = () => { shown = next; };
+        back.src = PHOTOS[next];
+      }, 5000);
+    }
+  }
+
+  vcr.addEventListener("animationend", () => vcr.classList.remove("loading"));
+
+  setInterval(() => {
+    if (vcr.classList.contains("loading")) return;
+    vcrMode.textContent = playing ? "PLAY" : "STOP";
+    if (playing && player && player.getCurrentTime) {
+      vcrCount.textContent = clock(player.getCurrentTime());
+    }
+  }, 500);
+
+  const wall = document.querySelector(".wall");
+  for (let i = 0; i < 14; i++) {
+    const d = document.createElement("div");
+    d.className = "dust";
+    const size = 1 + Math.random() * 2.2;
+    d.style.width = size + "px";
+    d.style.height = size + "px";
+    d.style.left = (55 + Math.random() * 35) + "%";
+    d.style.top = (20 + Math.random() * 40) + "%";
+    d.style.animationDelay = (Math.random() * 9) + "s";
+    d.style.animationDuration = (7 + Math.random() * 6) + "s";
+    wall.appendChild(d);
+  }
+</script>
+</body>
+</html>
